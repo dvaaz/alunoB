@@ -12,6 +12,8 @@ public class PedidoDTOResponse {
 
     private Integer usuario;
 
+    private Integer status;
+
 
     // getters and setters
 
@@ -45,5 +47,13 @@ public class PedidoDTOResponse {
 
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

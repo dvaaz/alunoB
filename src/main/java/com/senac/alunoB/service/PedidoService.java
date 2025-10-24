@@ -4,6 +4,7 @@ import com.senac.alunoB.entity.Pedido;
 import com.senac.alunoB.entity.dto.pedido.PedidoDTORequest;
 import com.senac.alunoB.entity.dto.pedido.PedidoDTOResponse;
 import com.senac.alunoB.repository.PedidoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class PedidoService {
         this.repository = repository;
     }
 
+    @Transactional
     public PedidoDTOResponse create(PedidoDTORequest dtoRequest){
         Pedido pedido = new Pedido();
         pedido.setData(dtoRequest.data());
