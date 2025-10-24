@@ -29,9 +29,9 @@ public class PedidoService {
         Pedido pedidoSalvo = repository.save(pedido);
 
         PedidoDTOResponse pedidoDTOResponse = new PedidoDTOResponse();
-        pedidoDTOResponse.setId(pedido.getId());
-        pedidoDTOResponse.setData(pedido.getData());
-        pedidoDTOResponse.setValorTotal(pedido.getValorTotal());
+        pedidoDTOResponse.setId(pedidoSalvo.getId());
+        pedidoDTOResponse.setData(pedidoSalvo.getData());
+        pedidoDTOResponse.setValorTotal(pedidoSalvo.getValorTotal());
 
         return pedidoDTOResponse;
     }
