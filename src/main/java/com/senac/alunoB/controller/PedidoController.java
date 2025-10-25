@@ -2,9 +2,9 @@ package com.senac.alunoB.controller;
 
 import com.senac.alunoB.entity.dto.pedido.PedidoDTORequest;
 import com.senac.alunoB.entity.dto.pedido.PedidoDTOResponse;
+import com.senac.alunoB.entity.dto.pedido.PedidosDeUsuarioDTO;
 import com.senac.alunoB.service.PedidoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin(origins="*")
 public class PedidoController {
     private final PedidoService service;
-    @Autowired
+
     public PedidoController(PedidoService service) {
         this.service = service;
     }
@@ -23,7 +23,7 @@ public class PedidoController {
     @PostMapping("/criar")
     public ResponseEntity<?> criar(@Valid @RequestBody PedidoDTORequest pedidoDTORequest){
         PedidoDTOResponse dtoResponse = service.create(pedidoDTORequest);
-        if(dtoResponse != null){
+        if(dtoResponse == null){
             return ResponseEntity.badRequest()
                     .body("Não foi possível criar o pedido. Verifique os dados.");
         }
@@ -31,9 +31,9 @@ public class PedidoController {
     }
 
     @GetMapping("/listar/{id}")
-    public ResponseEntity<List<PedidoDTOResponse>> listByUser(@PathVariable Integer id){
-        List<PedidoDTOResponse> dtoResponse = service.listByUser(id);
-        if(dtoResponse.isEmpty()){
+    public ResponseEntity<PedidosDeUsuarioDTO> listByUser(@PathVariable Integer id){
+		    PedidosDeUsuarioDTO dtoResponse = service.listByUser(id);
+        if(dtoResponse == null){
             return ResponseEntity.notFound().build();
         } else return  ResponseEntity.ok(dtoResponse);
     }

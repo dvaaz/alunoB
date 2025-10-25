@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
-@FeignClient(name="viacep", url="172.20.208.1", path = "/api/usuario")
-public interface UsuarioFeignClient {
+@FeignClient(name="UsuarioProva", url="172.20.208.1", path = "/api/usuario")
+public interface UsuarioClient {
     @PostMapping("/cadastrarFuncionario")
-    UsuarioDtoResponse create(@RequestBody UsuarioDTORequest usuarioRequest);
+    Optional<UsuarioDtoResponse> create(@RequestBody UsuarioDTORequest usuarioRequest);
 
     @GetMapping("/listar/{id}")
-    UsuarioDtoResponse findById(@Param("id") Integer id);
+    Optional<UsuarioDtoResponse> findById(@Param("id") Integer id);
 
     @GetMapping("/listar")
     List<UsuarioDtoResponse> list();
