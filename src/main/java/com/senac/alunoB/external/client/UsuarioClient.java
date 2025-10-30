@@ -16,7 +16,7 @@ public interface UsuarioClient {
     @PostMapping("/cadastrarFuncionario")
     Optional<UsuarioDtoResponse> create(@RequestBody UsuarioDTORequest usuarioRequest);
 
-    @GetMapping("/listar/{id}")
+    @GetMapping("/buscar/{id}")
     Optional<UsuarioDtoResponse> findById(@Param("id") Integer id);
 
     @GetMapping("/listar")

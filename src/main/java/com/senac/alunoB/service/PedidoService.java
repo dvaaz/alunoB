@@ -85,4 +85,9 @@ public class PedidoService {
             return dtoResponse;
         } return  null;
     }
+
+    public Pedido findById (Integer id){
+      return repository.findById(id)
+          .orElseThrow(() -> new RuntimeException("Id não encontrada"));
+    }
 }

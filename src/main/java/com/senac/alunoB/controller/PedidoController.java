@@ -1,5 +1,6 @@
 package com.senac.alunoB.controller;
 
+import com.senac.alunoB.entity.Pedido;
 import com.senac.alunoB.entity.dto.pedido.PedidoDTORequest;
 import com.senac.alunoB.entity.dto.pedido.PedidoDTOResponse;
 import com.senac.alunoB.entity.dto.pedido.PedidosDeUsuarioDTO;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/alunoB/produto")
@@ -30,9 +32,18 @@ public class PedidoController {
         return  ResponseEntity.ok(dtoResponse);
     }
 
-    @GetMapping("/listar/{id}")
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Pedido> findById(
+        @PathVariable Integer id){
+		    Pedido dtoResponse = service.findById(id);
+        if(dtoResponse == null ){
+            return ResponseEntity.notFound().build();
+        } else return  ResponseEntity.ok(dtoResponse);
+    }
+
+    @GetMapping("/buscar/usuario/{id}")
     public ResponseEntity<PedidosDeUsuarioDTO> listByUser(@PathVariable Integer id){
-		    PedidosDeUsuarioDTO dtoResponse = service.listByUser(id);
+        PedidosDeUsuarioDTO dtoResponse = service.listByUser(id);
         if(dtoResponse == null){
             return ResponseEntity.notFound().build();
         } else return  ResponseEntity.ok(dtoResponse);
