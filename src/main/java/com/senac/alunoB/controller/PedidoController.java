@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/alunoB/produto")
+@RequestMapping("/api/pedido")
 @CrossOrigin(origins="*")
 public class PedidoController {
     private final PedidoService service;
@@ -42,7 +42,9 @@ public class PedidoController {
     }
 
     @GetMapping("/buscar/usuario/{id}")
-    public ResponseEntity<PedidosDeUsuarioDTO> listByUser(@PathVariable Integer id){
+    public ResponseEntity<PedidosDeUsuarioDTO> listByUser(
+        @PathVariable Integer id
+    ){
         PedidosDeUsuarioDTO dtoResponse = service.listByUser(id);
         if(dtoResponse == null){
             return ResponseEntity.notFound().build();

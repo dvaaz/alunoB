@@ -1,10 +1,10 @@
 package com.senac.alunoB.controller;
 
-import com.senac.alunoB.entity.dto.pedido.PedidosDeUsuarioDTO;
+
 import com.senac.alunoB.entity.dto.usuario.UsuarioDtoResponse;
 import com.senac.alunoB.external.client.UsuarioClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
