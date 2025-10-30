@@ -5,7 +5,7 @@ import com.senac.alunoB.entity.dto.pedido.PedidoDTORequest;
 import com.senac.alunoB.entity.dto.pedido.PedidoDTOResponse;
 import com.senac.alunoB.entity.dto.pedido.PedidosDeUsuarioDTO;
 import com.senac.alunoB.entity.dto.usuario.UsuarioDtoResponse;
-import com.senac.alunoB.external.client.UsuarioClient;
+import com.senac.alunoB.repository.client.UsuarioClient;
 import com.senac.alunoB.repository.PedidoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +48,10 @@ public class PedidoService {
 
         return pedidoDTOResponse;
 		}
+
+    public List<Pedido> findByUser(Integer usuarioId){
+      return repository.findByUsuario(usuarioId);
+    }
 
     public PedidosDeUsuarioDTO listByUser(Integer usuarioId){
 				UsuarioDtoResponse usuario = usuarioClient.findById(usuarioId)

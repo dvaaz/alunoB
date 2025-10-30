@@ -1,4 +1,4 @@
-package com.senac.alunoB.external.client;
+package com.senac.alunoB.repository.client;
 
 import com.senac.alunoB.entity.dto.usuario.UsuarioDTORequest;
 import com.senac.alunoB.entity.dto.usuario.UsuarioDtoResponse;

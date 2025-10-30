@@ -43,10 +43,20 @@ public class PedidoController {
 
     @GetMapping("/buscar/usuario/{id}")
     public ResponseEntity<PedidosDeUsuarioDTO> listByUser(
-        @PathVariable Integer id
+        @PathVariable Integer usuarioId
     ){
-        PedidosDeUsuarioDTO dtoResponse = service.listByUser(id);
+        PedidosDeUsuarioDTO dtoResponse = service.listByUser(usuarioId);
         if(dtoResponse == null){
+            return ResponseEntity.notFound().build();
+        } else return  ResponseEntity.ok(dtoResponse);
+    }
+
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<Pedido>> findByUser(
+        @PathVariable Integer usuarioId
+    ){
+        List<Pedido> dtoResponse = service.findByUser(usuarioId);
+        if(dtoResponse.isEmpty()){
             return ResponseEntity.notFound().build();
         } else return  ResponseEntity.ok(dtoResponse);
     }
@@ -57,6 +67,5 @@ public class PedidoController {
         if(dtoResponse.isEmpty()){
             return ResponseEntity.notFound().build();
         } else return  ResponseEntity.ok(dtoResponse);
-
     }
 }
