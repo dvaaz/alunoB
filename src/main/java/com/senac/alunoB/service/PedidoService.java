@@ -1,9 +1,11 @@
 package com.senac.alunoB.service;
 
 import com.senac.alunoB.entity.Pedido;
+import com.senac.alunoB.entity.dto.UsuarioPedidoDTO;
 import com.senac.alunoB.entity.dto.pedido.PedidoDTORequest;
 import com.senac.alunoB.entity.dto.pedido.PedidoDTOResponse;
 import com.senac.alunoB.entity.dto.pedido.PedidosDeUsuarioDTO;
+import com.senac.alunoB.entity.dto.usuario.UsuarioDTORequest;
 import com.senac.alunoB.entity.dto.usuario.UsuarioDtoResponse;
 import com.senac.alunoB.repository.client.UsuarioClient;
 import com.senac.alunoB.repository.PedidoRepository;
@@ -13,18 +15,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class PedidoService {
     private final PedidoRepository repository;
 		private final UsuarioClient usuarioClient;
+    private final UsuarioService usuarioService;
 
-		@Autowired
-		public PedidoService(PedidoRepository repository, UsuarioClient usuarioClient) {
-				this.repository = repository;
-				this.usuarioClient = usuarioClient;
-		}
+    @Autowired
+  public PedidoService(PedidoRepository repository, UsuarioClient usuarioClient, UsuarioService usuarioService) {
+    this.repository = repository;
+    this.usuarioClient = usuarioClient;
+    this.usuarioService = usuarioService;
+  }
+
 
 
 
@@ -94,4 +100,49 @@ public class PedidoService {
       return repository.findById(id)
           .orElseThrow(() -> new RuntimeException("Id não encontrada"));
     }
+
+
+    public PedidoDTOResponse createWithoutUserVerificarion(Pedido dtoRequest, Integer userId){
+      Pedido pedido = new Pedido();
+      pedido.setData(dtoRequest.data());
+      pedido.setValorTotal(dtoRequest.valorTotal());
+      pedido.setStatus(1);
+      pedido.setUsuarioId(userId);
+
+      Pedido pedidoSalvo = repository.save(pedido);
+
+      PedidoDTOResponse pedidoDTOResponse = new PedidoDTOResponse();
+      pedidoDTOResponse.setId(pedidoSalvo.getId());
+      pedidoDTOResponse.setData(pedidoSalvo.getData());
+      pedidoDTOResponse.setValorTotal(pedidoSalvo.getValorTotal());
+
+      return pedidoDTOResponse;
+    }
+
+    @Transactional
+    public UsuarioDtoResponse pedidoDeUsuarioNaoCadastrado(UsuarioPedidoDTO usuarioPedidoDTO){
+      // cria novo usuario
+
+      UsuarioDtoResponse usuarioDTO = new UsuarioDtoResponse();
+      usuarioDTO.setNome(usuarioPedidoDTO.nomeUsuario());
+      usuarioDTO.setCpf(usuarioPedidoDTO.cpfUsuario());
+
+      UsuarioDtoResponse usuarioSave = usuarioService.create(usuarioDTO);
+
+      // em caso de problema na conexao do banco
+      if(usuarioSave == null) {
+        throw new RuntimeException("Não foi possivel criar novo usuário");
+      }
+      // obtem id do usuario
+      Integer usuarioId = usuarioSave.getId();
+      // cria pedido utilizando o id do usuario recem criado
+      Pedido pedido = new Pedido();
+      pedido.setData(usuarioPedidoDTO.dataPedido());
+      pedido.setUsuarioId(usuarioSave.getId());
+      pedido.setValorTotal(usuarioPedidoDTO.valorTotalPedido());
+      PedidoDTOResponse pedidoNovo =  this.createWithoutUserVerificarion(pedido, usuarioId);
+
+      return usuario;
+    }
+
 }

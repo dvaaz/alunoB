@@ -1,7 +1,9 @@
 package com.senac.alunoB.service;
 
+import com.senac.alunoB.entity.dto.usuario.UsuarioDTORequest;
 import com.senac.alunoB.entity.dto.usuario.UsuarioDtoResponse;
 import com.senac.alunoB.repository.client.UsuarioClient;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,4 +31,21 @@ public class UsuarioService {
       return (List<UsuarioDtoResponse>) new NoSuchElementException("Lista vazia");
     } else return dtoResponses;
   }
+
+
+  public UsuarioDtoResponse create(UsuarioDtoResponse dtoRequest) {
+    UsuarioDtoResponse usuario = new UsuarioDtoResponse();
+    usuario.setCpf(dtoRequest.getCpf());
+    usuario.setNome(dtoRequest.getNome());
+
+    Optional<UsuarioDtoResponse> save = usuarioClient.create(usuario);
+    if (save.isPresent()) {
+      usuario.setId(save.get().getId());
+      usuario.setStatus(save.get().getStatus());
+
+      return usuario;
+    }
+    return null;
+  }
+
 }

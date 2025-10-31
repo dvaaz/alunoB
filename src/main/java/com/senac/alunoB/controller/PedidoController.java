@@ -1,9 +1,11 @@
 package com.senac.alunoB.controller;
 
 import com.senac.alunoB.entity.Pedido;
+import com.senac.alunoB.entity.dto.UsuarioPedidoDTO;
 import com.senac.alunoB.entity.dto.pedido.PedidoDTORequest;
 import com.senac.alunoB.entity.dto.pedido.PedidoDTOResponse;
 import com.senac.alunoB.entity.dto.pedido.PedidosDeUsuarioDTO;
+import com.senac.alunoB.entity.dto.usuario.UsuarioDtoResponse;
 import com.senac.alunoB.service.PedidoService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -68,4 +70,12 @@ public class PedidoController {
             return ResponseEntity.notFound().build();
         } else return  ResponseEntity.ok(dtoResponse);
     }
+
+    @GetMapping("/criar/usuarioSemCadastro")
+    public ResponseEntity<UsuarioDtoResponse> pedidoDeUsuarioNaoCadastrado(
+        @Valid @RequestBody UsuarioPedidoDTO usuarioPedidoDTO
+    ){
+
+    }
+
 }
