@@ -51,7 +51,7 @@ public class PedidoController {
         } else return  ResponseEntity.ok(dtoResponse);
     }
 
-    @GetMapping("/usuario/{id}")
+    @GetMapping("/listar/usuario/{id}")
     public ResponseEntity<List<Pedido>> findByUser(
         @PathVariable Integer usuarioId
     ){
