@@ -25,7 +25,7 @@ public class UsuarioService {
 
   public List<UsuarioDtoResponse> list() {
     List<UsuarioDtoResponse> dtoResponses = usuarioClient.list();
-    if(!dtoResponses.isEmpty()){
+    if(dtoResponses.isEmpty()){
       return (List<UsuarioDtoResponse>) new NoSuchElementException("Lista vazia");
     } else return dtoResponses;
   }

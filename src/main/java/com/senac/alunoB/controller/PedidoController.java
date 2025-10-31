@@ -43,7 +43,7 @@ public class PedidoController {
 
     @GetMapping("/buscar/usuario/{id}")
     public ResponseEntity<PedidosDeUsuarioDTO> listByUser(
-        @PathVariable Integer usuarioId
+        @PathVariable("id") Integer usuarioId
     ){
         PedidosDeUsuarioDTO dtoResponse = service.listByUser(usuarioId);
         if(dtoResponse == null){
@@ -53,7 +53,7 @@ public class PedidoController {
 
     @GetMapping("/listar/usuario/{id}")
     public ResponseEntity<List<Pedido>> findByUser(
-        @PathVariable Integer usuarioId
+        @PathVariable("id") Integer usuarioId
     ){
         List<Pedido> dtoResponse = service.findByUser(usuarioId);
         if(dtoResponse.isEmpty()){
