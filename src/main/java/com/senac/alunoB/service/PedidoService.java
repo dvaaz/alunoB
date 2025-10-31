@@ -104,8 +104,8 @@ public class PedidoService {
 
     public PedidoDTOResponse createWithoutUserVerificarion(Pedido dtoRequest, Integer userId){
       Pedido pedido = new Pedido();
-      pedido.setData(dtoRequest.data());
-      pedido.setValorTotal(dtoRequest.valorTotal());
+      pedido.setData(dtoRequest.getData());
+      pedido.setValorTotal(dtoRequest.getValorTotal());
       pedido.setStatus(1);
       pedido.setUsuarioId(userId);
 
@@ -142,7 +142,7 @@ public class PedidoService {
       pedido.setValorTotal(usuarioPedidoDTO.valorTotalPedido());
       PedidoDTOResponse pedidoNovo =  this.createWithoutUserVerificarion(pedido, usuarioId);
 
-      return usuario;
+      return usuarioSave;
     }
 
 }
